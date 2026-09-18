@@ -1,5 +1,5 @@
 import { Text } from "@medusajs/ui"
-import { listProducts } from "@lib/data/products"
+import { getProductStore, listProducts } from "@lib/data/products"
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -28,24 +28,39 @@ export default async function ProductPreview({
     product,
   })
 
+  const store = getProductStore(product)
+
   return (
-    <LocalizedClientLink href={`/products/${product.handle}`} className="group">
-      <div data-testid="product-wrapper">
-        <Thumbnail
-          thumbnail={product.thumbnail}
-          images={product.images}
-          size="full"
-          isFeatured={isFeatured}
-        />
-        <div className="flex txt-compact-medium mt-4 justify-between">
-          <Text className="text-ui-fg-subtle" data-testid="product-title">
-            {product.title}
-          </Text>
-          <div className="flex items-center gap-x-2">
-            {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
+    <div className="group">
+      <LocalizedClientLink href={`/products/${product.handle}`}>
+        <div data-testid="product-wrapper">
+          <Thumbnail
+            thumbnail={product.thumbnail}
+            images={product.images}
+            size="full"
+            isFeatured={isFeatured}
+          />
+          <div className="flex txt-compact-medium mt-4 justify-between">
+            <Text className="text-ui-fg-subtle" data-testid="product-title">
+              {product.title}
+            </Text>
+            <div className="flex items-center gap-x-2">
+              {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
+            </div>
           </div>
         </div>
-      </div>
-    </LocalizedClientLink>
+      </LocalizedClientLink>
+      {store && (
+        <LocalizedClientLink
+          href={`/store?store_id=${store.id}`}
+          className="mt-1 flex txt-compact text-ui-fg-muted hover:text-ui-fg-subtle"
+        >
+          <span>Vendido por: </span>
+          <span className="underline underline-offset-2 ml-0.5">
+            {store.name}
+          </span>
+        </LocalizedClientLink>
+      )}
+    </div>
   )
 }

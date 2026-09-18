@@ -7,6 +7,16 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { getRegion, retrieveRegion } from "./regions"
 
+export type ProductWithStore = HttpTypes.StoreProduct & {
+  store?: { id: string; name: string }
+}
+
+export function getProductStore(
+  product: HttpTypes.StoreProduct
+): { id: string; name: string } | undefined {
+  return (product as ProductWithStore).store
+}
+
 export const listProducts = async ({
   pageParam = 1,
   queryParams,
@@ -63,7 +73,7 @@ export const listProducts = async ({
           offset,
           region_id: region?.id,
           fields:
-           "*variants.calculated_price,+variants.inventory_quantity,+metadata,+tags,", 
+           "*variants.calculated_price,+variants.inventory_quantity,+metadata,+tags,+store.id,+store.name,", 
           ...queryParams,
         },
         headers,
@@ -94,11 +104,13 @@ export const listProductsWithSort = async ({
   queryParams,
   sortBy = "created_at",
   countryCode,
+  storeId,
 }: {
   page?: number
   queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
   sortBy?: SortOptions
   countryCode: string
+  storeId?: string
 }): Promise<{
   response: { products: HttpTypes.StoreProduct[]; count: number }
   nextPage: number | null
@@ -107,7 +119,7 @@ export const listProductsWithSort = async ({
   const limit = queryParams?.limit || 12
 
   const {
-    response: { products, count },
+    response: { products, count: allCount },
   } = await listProducts({
     pageParam: 0,
     queryParams: {
@@ -119,11 +131,16 @@ export const listProductsWithSort = async ({
 
   const sortedProducts = sortProducts(products, sortBy)
 
+  const storeProducts = storeId
+    ? sortedProducts.filter((p) => getProductStore(p)?.id === storeId)
+    : sortedProducts
+
+  const count = storeId ? storeProducts.length : allCount
   const pageParam = (page - 1) * limit
 
   const nextPage = count > pageParam + limit ? pageParam + limit : null
 
-  const paginatedProducts = sortedProducts.slice(pageParam, pageParam + limit)
+  const paginatedProducts = storeProducts.slice(pageParam, pageParam + limit)
 
   return {
     response: {

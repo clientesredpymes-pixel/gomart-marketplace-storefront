@@ -1,4 +1,4 @@
-import { listProductsWithSort } from "@lib/data/products"
+import { getProductStore, listProductsWithSort } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
@@ -17,6 +17,7 @@ type PaginatedProductsParams = {
 export default async function PaginatedProducts({
   sortBy,
   page,
+  storeId,
   collectionId,
   categoryId,
   productsIds,
@@ -24,6 +25,7 @@ export default async function PaginatedProducts({
 }: {
   sortBy?: SortOptions
   page: number
+  storeId?: string
   collectionId?: string
   categoryId?: string
   productsIds?: string[]
@@ -61,13 +63,27 @@ export default async function PaginatedProducts({
     page,
     queryParams,
     sortBy,
+    storeId,
     countryCode,
   })
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
 
+  const storeName = storeId
+    ? products[0]
+      ? getProductStore(products[0])?.name
+      : undefined
+    : undefined
+
   return (
     <>
+      {storeId && (
+        <div className="mb-8 text-2xl-semi">
+          <h1 data-testid="store-page-title">
+            {storeName ? `Productos de ${storeName}` : "Productos de la tienda"}
+          </h1>
+        </div>
+      )}
       <ul
         className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
         data-testid="products-list"
