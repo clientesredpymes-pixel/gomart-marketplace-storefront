@@ -10,6 +10,7 @@ import { getProductPrice } from "@lib/util/get-product-price"
 import OptionSelect from "./option-select"
 import { HttpTypes } from "@medusajs/types"
 import { isSimpleProduct } from "@lib/util/product"
+import { computeSoldOutOptionValues } from "@lib/util/variant-stock"
 
 type MobileActionsProps = {
   product: HttpTypes.StoreProduct
@@ -51,6 +52,10 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   }, [price])
 
   const isSimple = isSimpleProduct(product)
+
+  const soldOutOptionValues = useMemo(() => {
+    return computeSoldOutOptionValues({ product, selectedOptions: options })
+  }, [product, options])
 
   return (
     <>
@@ -183,6 +188,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                                 updateOption={updateOptions}
                                 title={option.title ?? ""}
                                 disabled={optionsDisabled}
+                                soldOutValues={soldOutOptionValues[option.id]}
                               />
                             </div>
                           )

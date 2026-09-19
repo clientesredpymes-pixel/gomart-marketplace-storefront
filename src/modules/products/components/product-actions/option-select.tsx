@@ -8,6 +8,7 @@ type OptionSelectProps = {
   updateOption: (title: string, value: string) => void
   title: string
   disabled: boolean
+  soldOutValues?: Set<string>
   "data-testid"?: string
 }
 
@@ -18,6 +19,7 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
   title,
   "data-testid": dataTestId,
   disabled,
+  soldOutValues,
 }) => {
   const filteredOptions = (option.values ?? []).map((v) => v.value)
 
@@ -29,6 +31,8 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
         data-testid={dataTestId}
       >
         {filteredOptions.map((v) => {
+          const isSoldOut = soldOutValues?.has(v) ?? false
+
           return (
             <button
               onClick={() => updateOption(option.id, v)}
@@ -39,10 +43,13 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
                   "border-ui-border-interactive": v === current,
                   "hover:shadow-elevation-card-rest transition-shadow ease-in-out duration-150":
                     v !== current,
+                  "text-ui-fg-muted bg-ui-bg-disabled line-through opacity-60 cursor-not-allowed border-ui-border-base":
+                    isSoldOut,
                 }
               )}
-              disabled={disabled}
+              disabled={disabled || isSoldOut}
               data-testid="option-button"
+              aria-disabled={isSoldOut}
             >
               {v}
             </button>

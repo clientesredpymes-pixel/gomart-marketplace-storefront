@@ -12,6 +12,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
 import { useRouter } from "next/navigation"
+import { computeSoldOutOptionValues } from "@lib/util/variant-stock"
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
@@ -120,6 +121,10 @@ export default function ProductActions({
 
   const inView = useIntersection(actionsRef, "0px")
 
+  const soldOutOptionValues = useMemo(() => {
+    return computeSoldOutOptionValues({ product, selectedOptions: options })
+  }, [product, options])
+
   // add the selected variant to the cart
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return null
@@ -151,6 +156,7 @@ export default function ProductActions({
                       title={option.title ?? ""}
                       data-testid="product-options"
                       disabled={!!disabled || isAdding}
+                      soldOutValues={soldOutOptionValues[option.id]}
                     />
                   </div>
                 )
