@@ -1,21 +1,12 @@
 "use server"
 
 import { sdk } from "@lib/config"
+import { getProductStore } from "@lib/util/get-product-store"
 import { sortProducts } from "@lib/util/sort-products"
 import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { getRegion, retrieveRegion } from "./regions"
-
-export type ProductWithStore = HttpTypes.StoreProduct & {
-  store?: { id: string; name: string }
-}
-
-export function getProductStore(
-  product: HttpTypes.StoreProduct
-): { id: string; name: string } | undefined {
-  return (product as ProductWithStore).store
-}
 
 export const listProducts = async ({
   pageParam = 1,
