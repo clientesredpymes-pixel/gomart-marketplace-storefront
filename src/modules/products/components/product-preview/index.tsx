@@ -4,7 +4,6 @@ import { getProductStore } from "@lib/util/get-product-store"
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import ProductBadges from "../product-badges"
 import Thumbnail from "../thumbnail"
 import PreviewPrice from "./price"
 
@@ -36,15 +35,13 @@ export default async function ProductPreview({
     <div className="group">
       <LocalizedClientLink href={`/products/${product.handle}`}>
         <div data-testid="product-wrapper">
-          <div className="relative">
-            <Thumbnail
-              thumbnail={product.thumbnail}
-              images={product.images}
-              size="full"
-              isFeatured={isFeatured}
-            />
-            <ProductBadges product={product} />
-          </div>
+          <Thumbnail
+            thumbnail={product.thumbnail}
+            images={product.images}
+            size="full"
+            isFeatured={isFeatured}
+            product={product}
+          />
           <div className="flex txt-compact-medium mt-4 justify-between">
             <Text className="text-ui-fg-subtle" data-testid="product-title">
               {product.title}

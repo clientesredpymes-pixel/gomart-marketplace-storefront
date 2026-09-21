@@ -1,8 +1,10 @@
 import { Container, clx } from "@medusajs/ui"
 import Image from "next/image"
 import React from "react"
+import { HttpTypes } from "@medusajs/types"
 
 import PlaceholderImage from "@modules/common/icons/placeholder-image"
+import ProductBadges from "../product-badges"
 
 type ThumbnailProps = {
   thumbnail?: string | null
@@ -10,6 +12,7 @@ type ThumbnailProps = {
   images?: any[] | null
   size?: "small" | "medium" | "large" | "full" | "square"
   isFeatured?: boolean
+  product?: HttpTypes.StoreProduct
   className?: string
   "data-testid"?: string
 }
@@ -19,6 +22,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   images,
   size = "small",
   isFeatured,
+  product,
   className,
   "data-testid": dataTestid,
 }) => {
@@ -42,6 +46,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       data-testid={dataTestid}
     >
       <ImageOrPlaceholder image={initialImage} size={size} />
+      {product && product.id && <ProductBadges product={product} />}
     </Container>
   )
 }
