@@ -86,13 +86,13 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
           aria-modal="true"
           aria-label="Vista ampliada de la imagen"
         >
-          <div className="relative max-h-[85vh] max-w-[90vw] overflow-auto">
+          <div className="relative">
             <Image
               src={activeImage.url}
               alt={`Product image ${activeIndex + 1} ampliada`}
               width={1600}
               height={1900}
-              className="object-contain"
+              className="max-h-[85vh] max-w-[90vw] rounded-rounded object-contain"
               sizes="90vw"
             />
           </div>
