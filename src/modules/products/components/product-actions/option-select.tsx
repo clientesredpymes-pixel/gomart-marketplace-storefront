@@ -9,6 +9,7 @@ type OptionSelectProps = {
   title: string
   disabled: boolean
   soldOutValues?: Set<string>
+  compact?: boolean
   "data-testid"?: string
 }
 
@@ -20,14 +21,17 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
   "data-testid": dataTestId,
   disabled,
   soldOutValues,
+  compact,
 }) => {
   const filteredOptions = (option.values ?? []).map((v) => v.value)
 
   return (
     <div className="flex flex-col gap-y-3">
-      <span className="text-sm">Select {title}</span>
+      {!compact && <span className="text-sm">Select {title}</span>}
       <div
-        className="flex flex-wrap justify-between gap-2"
+        className={clx("flex flex-wrap justify-between gap-2", {
+          "flex-nowrap justify-start": compact,
+        })}
         data-testid={dataTestId}
       >
         {filteredOptions.map((v) => {
@@ -38,7 +42,9 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
               onClick={() => updateOption(option.id, v)}
               key={v}
               className={clx(
-                "border-ui-border-base bg-ui-bg-subtle border text-small-regular h-10 rounded-rounded p-2 flex-1 ",
+                compact
+                  ? "border-ui-border-base bg-ui-bg-subtle border text-[10px] h-8 rounded-base px-2 flex-none"
+                  : "border-ui-border-base bg-ui-bg-subtle border text-small-regular h-10 rounded-rounded p-2 flex-1 ",
                 {
                   "border-ui-border-interactive": v === current,
                   "hover:shadow-elevation-card-rest transition-shadow ease-in-out duration-150":

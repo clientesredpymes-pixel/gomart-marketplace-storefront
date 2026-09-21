@@ -11,6 +11,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
+import StickyActions from "./sticky-actions"
 import { useRouter } from "next/navigation"
 import { computeSoldOutOptionValues } from "@lib/util/variant-stock"
 
@@ -200,6 +201,18 @@ export default function ProductActions({
           optionsDisabled={!!disabled || isAdding}
         />
       </div>
+      <StickyActions
+        product={product}
+        variant={selectedVariant}
+        options={options}
+        updateOptions={setOptionValue}
+        inStock={inStock}
+        isValidVariant={isValidVariant}
+        handleAddToCart={handleAddToCart}
+        isAdding={isAdding}
+        show={!inView}
+        optionsDisabled={!!disabled || isAdding}
+      />
     </>
   )
 }
