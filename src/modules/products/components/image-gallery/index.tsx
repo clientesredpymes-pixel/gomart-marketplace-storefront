@@ -4,9 +4,11 @@ import { useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { Container } from "@medusajs/ui"
 import Image from "next/image"
+import ProductBadges from "../product-badges"
 
 type ImageGalleryProps = {
   images: HttpTypes.StoreProductImage[]
+  product: HttpTypes.StoreProduct
 }
 
 /**
@@ -14,7 +16,7 @@ type ImageGalleryProps = {
  * - Miniaturas clicables a la izquierda (desktop) / hilera (mobile)
  * - Imagen principal grande con zoom al hover (scale) y al click (lightbox)
  */
-const ImageGallery = ({ images }: ImageGalleryProps) => {
+const ImageGallery = ({ images, product }: ImageGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
@@ -61,6 +63,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
           className="relative aspect-[29/34] w-full overflow-hidden bg-ui-bg-subtle group cursor-zoom-in"
           onClick={() => setLightboxOpen(true)}
         >
+          <ProductBadges product={product} />
           {!!activeImage?.url && (
             <Image
               src={activeImage.url}
