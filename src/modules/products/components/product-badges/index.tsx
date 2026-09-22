@@ -27,7 +27,7 @@ const ProductBadges = ({ product, className }: ProductBadgesProps) => {
   return (
     <div
       className={clx(
-        "absolute top-2 left-2 z-10 flex flex-col items-start gap-1",
+        "absolute top-2 left-2 z-10 flex flex-col items-start gap-1 pointer-events-none",
         className
       )}
     >

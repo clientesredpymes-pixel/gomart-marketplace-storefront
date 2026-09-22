@@ -20,6 +20,14 @@ const ImageGallery = ({ images, product }: ImageGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
+  const handleThumbnailClick = (index: number) => {
+    setActiveIndex(index)
+    // En mobile (menos de 1024px) tocar una miniatura abre el zoom de esa imagen
+    if (window.innerWidth < 1024) {
+      setLightboxOpen(true)
+    }
+  }
+
   if (!images || images.length === 0) {
     return null
   }
@@ -35,7 +43,7 @@ const ImageGallery = ({ images, product }: ImageGalleryProps) => {
             <button
               key={image.id}
               type="button"
-              onClick={() => setActiveIndex(index)}
+              onClick={() => handleThumbnailClick(index)}
               aria-label={`Ver imagen ${index + 1}`}
               className={`relative h-20 w-16 small:h-24 small:w-20 shrink-0 overflow-hidden rounded-rounded border transition-all ${
                 index === activeIndex
