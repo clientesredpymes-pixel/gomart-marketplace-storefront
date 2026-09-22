@@ -147,10 +147,10 @@ const StickyActions: React.FC<StickyActionsProps> = ({
               data-testid="sticky-cart-button"
             >
               {!variant || !isValidVariant
-                ? "Select variant"
+                ? "Selecciona una opción"
                 : !inStock
-                ? "Out of stock"
-                : "Add to cart"}
+                ? "Agotado"
+                : "Añadir al carrito"}
             </Button>
           </div>
         </div>
