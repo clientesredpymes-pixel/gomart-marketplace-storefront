@@ -5,6 +5,7 @@ import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
 import TrustBadges from "@modules/products/components/trust-badges"
+import ProductFaqs from "@modules/products/components/product-faqs"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
@@ -59,6 +60,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         </div>
       </div>
       <TrustBadges />
+      <ProductFaqs />
       <div
         className="content-container my-16 small:my-32"
         data-testid="related-products-container"
