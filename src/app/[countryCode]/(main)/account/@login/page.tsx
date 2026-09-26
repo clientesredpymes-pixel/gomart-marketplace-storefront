@@ -4,7 +4,7 @@ import LoginTemplate from "@modules/account/templates/login-template"
 
 export const metadata: Metadata = {
   title: "Iniciar sesión",
-  description: "Inicia sesión en tu cuenta de Medusa Store.",
+  description: "Inicia sesión en tu cuenta de GoMart Marketplace.",
 }
 
 export default function Login() {

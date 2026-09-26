@@ -11,12 +11,12 @@ import LanguageSelect from "../language-select"
 import { HttpTypes } from "@medusajs/types"
 import { Locale } from "@lib/data/locales"
 
-const SideMenuItems = {
-  Home: "/",
-  Store: "/store",
-  Account: "/account",
-  Cart: "/cart",
-}
+const SideMenuItems = [
+  { label: "Inicio", href: "/", testId: "home-link" },
+  { label: "Tienda", href: "/store", testId: "store-link" },
+  { label: "Cuenta", href: "/account", testId: "account-link" },
+  { label: "Carrito", href: "/cart", testId: "cart-link" },
+]
 
 type SideMenuProps = {
   regions: HttpTypes.StoreRegion[] | null
@@ -39,7 +39,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                   data-testid="nav-menu-button"
                   className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
                 >
-                  Menu
+                  Menú
                 </Popover.Button>
               </div>
 
@@ -72,16 +72,16 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                       </button>
                     </div>
                     <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
+                      {SideMenuItems.map(({ label, href, testId }) => {
                         return (
-                          <li key={name}>
+                          <li key={href}>
                             <LocalizedClientLink
                               href={href}
                               className="text-3xl leading-10 hover:text-ui-fg-disabled"
                               onClick={close}
-                              data-testid={`${name.toLowerCase()}-link`}
+                              data-testid={testId}
                             >
-                              {name}
+                              {label}
                             </LocalizedClientLink>
                           </li>
                         )
@@ -126,8 +126,8 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Medusa Store. All rights
-                        reserved.
+                        © {new Date().getFullYear()} GoMart Marketplace. Todos
+                        los derechos reservados.
                       </Text>
                     </div>
                   </div>

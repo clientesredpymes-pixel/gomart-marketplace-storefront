@@ -21,10 +21,10 @@ const Register = ({ setCurrentView }: Props) => {
       data-testid="register-page"
     >
       <h1 className="text-large-semi uppercase mb-6">
-        Conviértete en miembro de Medusa Store
+        Conviértete en miembro de GoMart Marketplace
       </h1>
       <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Crea tu perfil de miembro de Medusa Store y accede a una mejor
+        Crea tu perfil de miembro de GoMart Marketplace y accede a una mejor
         experiencia de compra.
       </p>
       <form className="w-full flex flex-col" action={formAction}>
@@ -83,7 +83,7 @@ const Register = ({ setCurrentView }: Props) => {
           >
             Términos de uso
           </LocalizedClientLink>{" "}
-          de Medusa Store.
+          de GoMart Marketplace.
         </span>
         <SubmitButton className="w-full mt-6" data-testid="register-button">
           Registrarme

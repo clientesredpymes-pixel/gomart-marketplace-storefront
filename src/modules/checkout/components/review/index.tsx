@@ -41,7 +41,7 @@ const Review = ({ cart }: { cart: any }) => {
                 Al hacer clic en el botón Realizar pedido, confirmas que has
                 leído, comprendido y aceptado nuestros Términos de uso, Términos
                 de venta y Política de devoluciones, y reconoces haber leído la
-                Política de privacidad de Medusa Store.
+                Política de privacidad de GoMart Marketplace.
               </Text>
             </div>
           </div>
